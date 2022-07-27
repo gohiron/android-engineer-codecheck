@@ -22,7 +22,8 @@ class OneFragment : Fragment(R.layout.fragment_one) {
 
         val adapter = ItemListAdapter(object : ItemListAdapter.OnItemClickListener {
             override fun itemClick(item: Item) {
-                val action = OneFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
+                val action =
+                    OneFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(item = item)
                 findNavController().navigate(action)
             }
         })
