@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright © 2021 YUMEMI Inc. All rights reserved.
  */
 package jp.co.yumemi.android.codeCheck
@@ -16,24 +16,33 @@ class TwoFragment : Fragment(R.layout.fragment_two) {
 
     private val args: TwoFragmentArgs by navArgs()
 
-    private var binding: FragmentTwoBinding? = null
-    private val _binding get() = binding
+    private var _binding: FragmentTwoBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("検索した日時", lastSearchDate.toString())
 
-        val binding = FragmentTwoBinding.bind(view)
+        _binding = FragmentTwoBinding.bind(view)
 
-        var item = args.item
+        val item = args.item
 
-        binding.ownerIconView.load(item.ownerIconUrl);
-        binding.nameView.text = item.name;
-        binding.languageView.text = item.language;
-        binding.starsView.text = "${item.stargazersCount} stars";
-        binding.watchersView.text = "${item.watchersCount} watchers";
-        binding.forksView.text = "${item.forksCount} forks";
-        binding.openIssuesView.text = "${item.openIssuesCount} open issues";
+        binding.ownerIconView.load(item.ownerIconUrl)
+        binding.nameView.text = item.name
+        binding.languageView.text = item.language
+        var joinString = "${item.stargazersCount} stars"
+        binding.starsView.text = joinString
+        joinString = "${item.watchersCount} watchers"
+        binding.watchersView.text = joinString
+        joinString = "${item.forksCount} forks"
+        binding.forksView.text = joinString
+        joinString = "${item.openIssuesCount} open issues"
+        binding.openIssuesView.text = joinString
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

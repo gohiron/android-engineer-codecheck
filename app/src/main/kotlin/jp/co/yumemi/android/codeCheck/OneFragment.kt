@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright © 2021 YUMEMI Inc. All rights reserved.
  */
 package jp.co.yumemi.android.codeCheck
@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
-import jp.co.yumemi.android.codeCheck.R
 import jp.co.yumemi.android.codeCheck.databinding.FragmentOneBinding
 
 class OneFragment : Fragment(R.layout.fragment_one) {
@@ -22,7 +21,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
 
         val binding = FragmentOneBinding.bind(view)
 
-        val viewModel = context?.let { OneViewModel(it) }
+        val viewModel = OneViewModel()
 
         val layoutManager = LinearLayoutManager(context)
         val dividerItemDecoration =
@@ -37,8 +36,10 @@ class OneFragment : Fragment(R.layout.fragment_one) {
             .setOnEditorActionListener { editText, action, _ ->
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
-                        viewModel?.searchResults(it).apply {
-                            adapter.submitList(this)
+                        context?.let { it1 ->
+                            viewModel.searchResults(it1, it).apply {
+                                adapter.submitList(this)
+                            }
                         }
                     }
                     return@setOnEditorActionListener true
