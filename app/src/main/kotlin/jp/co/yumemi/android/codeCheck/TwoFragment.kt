@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import jp.co.yumemi.android.codeCheck.TopActivity.Companion.lastSearchDate
 import jp.co.yumemi.android.codeCheck.databinding.FragmentTwoBinding
+import jp.co.yumemi.android.codeCheck.model.Item
 
 class TwoFragment : Fragment(R.layout.fragment_two) {
 
@@ -26,19 +27,7 @@ class TwoFragment : Fragment(R.layout.fragment_two) {
 
         _binding = FragmentTwoBinding.bind(view)
 
-        val item = args.item
-
-        binding.ownerIconView.load(item.ownerIconUrl)
-        binding.nameView.text = item.name
-        binding.languageView.text = item.language
-        var joinString = "${item.stargazersCount} stars"
-        binding.starsView.text = joinString
-        joinString = "${item.watchersCount} watchers"
-        binding.watchersView.text = joinString
-        joinString = "${item.forksCount} forks"
-        binding.forksView.text = joinString
-        joinString = "${item.openIssuesCount} open issues"
-        binding.openIssuesView.text = joinString
+        args.item.bind(binding)
     }
 
     override fun onDestroyView() {
