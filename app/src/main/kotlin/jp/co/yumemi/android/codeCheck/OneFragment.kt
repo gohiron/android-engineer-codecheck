@@ -4,11 +4,8 @@
 package jp.co.yumemi.android.codeCheck
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
@@ -20,7 +17,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
-            override fun itemClick(item: item) {
+            override fun itemClick(item: Item) {
                 gotoRepositoryFragment(item)
             }
         })
@@ -38,7 +35,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
                         context?.let { it1 ->
-                            viewModel.searchResults(it1, it).apply {
+                            viewModel.searchGit(it1, it).getResult().apply {
                                 adapter.submitList(this)
                             }
                         }
@@ -55,10 +52,9 @@ class OneFragment : Fragment(R.layout.fragment_one) {
         }
     }
 
-    fun gotoRepositoryFragment(item: item) {
+    fun gotoRepositoryFragment(item: Item) {
         val action = OneFragmentDirections
             .actionRepositoriesFragmentToRepositoryFragment(item = item)
         findNavController().navigate(action)
     }
 }
-
