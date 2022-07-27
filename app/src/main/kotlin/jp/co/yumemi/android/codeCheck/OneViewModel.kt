@@ -6,6 +6,7 @@ package jp.co.yumemi.android.codeCheck
 import android.content.Context
 import android.os.Parcelable
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.DiffUtil
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.android.*
@@ -88,3 +89,14 @@ data class item(
     val forksCount: Long,
     val openIssuesCount: Long,
 ) : Parcelable
+
+
+val diff_util = object : DiffUtil.ItemCallback<item>() {
+    override fun areItemsTheSame(oldItem: item, newItem: item): Boolean {
+        return oldItem.name == newItem.name
+    }
+
+    override fun areContentsTheSame(oldItem: item, newItem: item): Boolean {
+        return oldItem == newItem
+    }
+}
